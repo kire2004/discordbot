@@ -12,4 +12,11 @@ client.on('message', message => {
   }
 });
 
-client.login();
+client.on('voiceStateUpdate', (oldMember, newMember) => {
+      if (oldMember.voiceChannelID === null) {
+        const textChannel = client.channels.find("name", "general");
+        textChannel.send('Hello');
+    }
+})
+
+client.login(token.token);
