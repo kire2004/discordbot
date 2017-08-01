@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/kire2004/discordbot#readme",
   "dependencies": {
-    "discord.js": "^11.1.0"
+    "discord.js": "^11.1.0",
+    "fs": "0.0.1-security",
+    "opusscript": "0.0.3",
+    "ytdl-core": "^0.15.0"
   }
 }
