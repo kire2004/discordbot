@@ -4,26 +4,32 @@ const token = require('./token.js');
 const ytdl = require('ytdl-core');
 const streamOptions = { seek: 0, volume: 1 };
 const fs = require('fs');
+let broadcast = client.createVoiceBroadcast();
 
-
-const broadcast = client.createVoiceBroadcast();
-
-client.on('ready', () => {
-  console.log('I am ready!');
+function playSong(youtubeurl) {
+  broadcast.destroy();
+  broadcast = client.createVoiceBroadcast();
   const voiceChannel = client.channels.find("name", "General");
+
 
   voiceChannel.join()
     .then(connection => {
-      const stream = ytdl('https://www.youtube.com/watch?v=XsZKrctSDaw', { filter : 'audioonly' });
+      const stream = ytdl(youtubeurl, { filter : 'audioonly' });
       broadcast.playStream(stream);
       const dispatcher = connection.playBroadcast(broadcast);
     })
     .catch(console.error);
+}
+
+
+client.on('ready', () => {
+  console.log('I am ready!');
 });
 
 client.on('message', message => {
-  if (message.content === 'ping') {
-    message.reply('pong');
+  if (message.content.includes('!play')) {
+  const command = message.content.split(' ');
+  playSong(command[1]);
   }
 });
 
